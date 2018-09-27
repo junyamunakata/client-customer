@@ -1,10 +1,14 @@
 class ClientsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_client, only: [:show, :edit, :update]
   def index
-    @clients = Client.all
+    @clients = Client.page(params[:page])
+    @clients = Client.page(params[:page]).per(10)
   end
 
   def show
-    @client = Client.find(params[:id])
+    @comment = @client.comments.build
+    @comments = Comment.where(client_id: @client.id)
   end
 
   def new
@@ -20,11 +24,11 @@ class ClientsController < ApplicationController
   end
 
   def edit
-    @client = Client.find(params[:id])
+    
   end
 
   def update
-    @client = Client.find(params[:id])
+
     if @clent.update(client_params)
       redirect_to @client
     else
@@ -37,5 +41,9 @@ class ClientsController < ApplicationController
     params.require(:client).permit(:family_name,
     :given_name,
     :email)
+  end
+
+  def set_client
+    @client = Client.find(params[:id])
   end
 end

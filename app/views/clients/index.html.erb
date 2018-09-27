@@ -17,6 +17,8 @@
     <th>名</th>
     <th>電子メール</th>
     <th>リンク</th>
+    <th>所属会社</th>
+    <th>リンク</th>
   </thead>
     <tbody>
       <% @clients.each do |client| %>
@@ -29,3 +31,4 @@
       <% end %>
     </tbody>
   <tbody>
+  <%= paginate @clients %>
